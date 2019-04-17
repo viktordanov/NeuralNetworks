@@ -18,7 +18,7 @@ class NeuralNetwork {
  public:
   NeuralNetwork(vector<int>);
   ~NeuralNetwork();
-  vector<double> guess(vector<double>);
+  // vector<double> guess(vector<double>);
   /**
    *  pair.first -> input layer as Matrix
    *    |
@@ -35,6 +35,7 @@ class NeuralNetwork {
   void train(pair<MatrixXd, MatrixXd>, int);
   void printLayers();
   void printWeights();
+  void saveWeightsToFile();
 
  private:
   void feedforward();

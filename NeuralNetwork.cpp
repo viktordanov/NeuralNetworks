@@ -2,8 +2,18 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <fstream>
 #include <functional>
 #include <iostream>
+
+const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision,
+                                       Eigen::DontAlignCols, " ", "\n");
+
+void writeToCSVfile(string name, MatrixXd matrix) {
+  ofstream file(name.c_str());
+  file << matrix.format(CSVFormat);
+  file.close();
+}
 
 double sigmoid(double n) { return 1.0 / (1.0 + std::exp(-n)); }
 double sigmoid_derivative(double n) { return n * (1.0 - n); }
@@ -47,11 +57,19 @@ void NeuralNetwork::printLayers() {
 void NeuralNetwork::printWeights() {
   for (int i = 0; i < this->weightsLength; i++) std::cout << this->W[i] << endl;
 }
+void NeuralNetwork::saveWeightsToFile() {
+  for (int i = 0; i < this->weightsLength; i++) {
+    writeToCSVfile("weights." + to_string(i) + ".csv", this->W[i]);
+  }
+  writeToCSVfile("layer.o.csv", this->L[this->layersLength - 1]);
+}
 
 void NeuralNetwork::train(pair<MatrixXd, MatrixXd> inOutSets, int repetitions) {
   this->L[0] = inOutSets.first;
 
   for (int i = 0; i < repetitions; i++) {
+    if (i % (repetitions / 100 + 1) == 0)
+      printf("\r %.2f%\tcomplete  ", i * 100.0 / repetitions);
     this->feedforward();
     this->backpropagation(inOutSets.second);
   }

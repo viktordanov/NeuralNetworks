@@ -1,25 +1,39 @@
 #include <chrono>
-#include <iostream>
 #include "Eigen/Dense"
 #include "NeuralNetwork.hpp"
+
 using Eigen::MatrixXd;
 
-double ssigmoid(double n) { return 1.0 / (1.0 + std::exp(-n)); }
-int main(int argc, char **args) {
+int main(int argc, char** args) {
   srand(time(NULL));
 
-  NeuralNetwork nn = NeuralNetwork({3, 4, 1});
+  Eigen::setNbThreads(2);
+  NeuralNetwork nn = NeuralNetwork({35, 5, 10});
 
   // Note: Using 3 (neurons) as the # of columns
-  MatrixXd input(4, 3);
-  MatrixXd output(4, 1);
+  MatrixXd input(10, 35);
+  MatrixXd output(10, 10);
 
-  input << 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1;
-  output << 0, 1, 1, 0;
+  input << 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1,
+      1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0,
+      1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0,
+      0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0,
+      0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0,
+      1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1,
+      1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1,
+      1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
+      1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0,
+      0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+      1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+      1, 1;
+  output.setIdentity();
 
   int iteration = argc > 1 ? stoi(args[1]) : 10;
 
-  printf("Training initialized\n");
+  printf("Training initialized, running on %d threads\n", Eigen::nbThreads());
   auto start = chrono::steady_clock::now();
   nn.train({input, output}, iteration);
   auto end = chrono::steady_clock::now();
@@ -29,4 +43,5 @@ int main(int argc, char **args) {
 
   printf("Layers:\n");
   nn.printLayers();
+  nn.saveWeightsToFile();
 }
