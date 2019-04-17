@@ -1,18 +1,19 @@
 #include <cstdio>
 #include <vector>
-#include "Matrix.hpp"
+#include "Eigen/Dense"
 
 using namespace std;
+using Eigen::MatrixXd;
 
 class NeuralNetwork {
-  Matrix *L;
-  Matrix *W;
+  MatrixXd *L;
+  MatrixXd *W;
 
   int layersLength;
   int weightsLength;
 
-  Matrix *deltas;
-  Matrix lastError;
+  MatrixXd *deltas;
+  MatrixXd lastError;
 
  public:
   NeuralNetwork(vector<int>);
@@ -31,11 +32,11 @@ class NeuralNetwork {
    *
    *   Rows and columns are flipped so as to avoid transposing when multiplying
    */
-  void train(pair<Matrix, Matrix>, int);
+  void train(pair<MatrixXd, MatrixXd>, int);
   void printLayers();
   void printWeights();
 
  private:
   void feedforward();
-  void backpropagation(Matrix);
+  void backpropagation(MatrixXd);
 };
