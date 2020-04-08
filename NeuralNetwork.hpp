@@ -16,7 +16,7 @@ class NeuralNetwork {
     MatrixXd *deltas;
     MatrixXd lastError;
 
-  public:
+   public:
     NeuralNetwork(vector<int>);
     ~NeuralNetwork();
     // vector<double> guess(vector<double>);
@@ -33,14 +33,14 @@ class NeuralNetwork {
      *
      *   Rows and columns are flipped so as to avoid transposing when multiplying
      */
-    void train(pair<MatrixXd, MatrixXd>, int);
+    void train(pair<MatrixXd, MatrixXd> &&, int);
     MatrixXd guess(MatrixXd testRow);
     void printLayers();
     void printOutput();
     void printWeights();
     void saveWeightsToFile();
 
-  private:
+   private:
     void feedforward();
-    void backpropagation(MatrixXd);
+    void backpropagation(MatrixXd &);
 };

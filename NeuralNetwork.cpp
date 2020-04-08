@@ -52,13 +52,11 @@ NeuralNetwork::~NeuralNetwork() {
 // vector<double> NeuralNetwork::guess(vector<double>);
 
 void NeuralNetwork::printLayers() {
-    for (int i = 0; i < this->layersLength; i++)
-        std::cout << this->L[i] << endl;
+    for (int i = 0; i < this->layersLength; i++) std::cout << this->L[i] << endl;
 }
 void NeuralNetwork::printOutput() { std::cout << this->L[layersLength - 1] << endl; }
 void NeuralNetwork::printWeights() {
-    for (int i = 0; i < this->weightsLength; i++)
-        std::cout << this->W[i] << endl;
+    for (int i = 0; i < this->weightsLength; i++) std::cout << this->W[i] << endl;
 }
 void NeuralNetwork::saveWeightsToFile() {
     for (int i = 0; i < this->weightsLength; i++) {
@@ -67,7 +65,7 @@ void NeuralNetwork::saveWeightsToFile() {
     writeToCSVfile("layer.o.csv", this->L[this->layersLength - 1]);
 }
 
-void NeuralNetwork::train(pair<MatrixXd, MatrixXd> inOutSets, int repetitions) {
+void NeuralNetwork::train(pair<MatrixXd, MatrixXd>&& inOutSets, int repetitions) {
     this->L[0] = inOutSets.first;
 
     for (int i = 0; i < repetitions; i++) {
@@ -97,7 +95,7 @@ void NeuralNetwork::feedforward() {
         this->L[i + 1] = this->L[i + 1].unaryExpr(&sigmoid);
     }
 }
-void NeuralNetwork::backpropagation(MatrixXd desiredOutputs) {
+void NeuralNetwork::backpropagation(MatrixXd& desiredOutputs) {
     this->deltas = new MatrixXd[this->layersLength];
 
     MatrixXd outputLayerCopy = this->L[this->layersLength - 1];
@@ -126,7 +124,6 @@ void NeuralNetwork::backpropagation(MatrixXd desiredOutputs) {
         this->W[i] += res * 0.1;
     }
 
-    for (int n = 0; n < this->layersLength; ++n)
-        this->deltas[n].resize(0, 0);
+    for (int n = 0; n < this->layersLength; ++n) this->deltas[n].resize(0, 0);
     delete[] this->deltas;
 }
