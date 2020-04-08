@@ -33,3 +33,8 @@
 
 .vscode/*
 Eigen/*
+out.csv
+layer.o.csv
+weights.0.csv
+weights.1.csv
+main
