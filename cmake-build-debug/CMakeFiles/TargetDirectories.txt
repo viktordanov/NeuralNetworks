@@ -1,0 +1,3 @@
+/home/vikimaster2/Projects/Code/cpp-neural-networks/cmake-build-debug/CMakeFiles/cpp_neural_networks.dir
+/home/vikimaster2/Projects/Code/cpp-neural-networks/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/vikimaster2/Projects/Code/cpp-neural-networks/cmake-build-debug/CMakeFiles/rebuild_cache.dir

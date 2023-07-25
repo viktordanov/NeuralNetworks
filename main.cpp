@@ -1,5 +1,6 @@
 #include <chrono>
 #include <ctime>
+#include <string>
 #include "Matrix.hpp"
 #include "NeuralNetwork.hpp"
 
@@ -39,6 +40,4 @@ int main(int argc, char **args) {
 
   printf("Layers:\n");
   nn.printLayers();
-
-  std::vector<double> guess  = nn.guess({0, 0});
 }

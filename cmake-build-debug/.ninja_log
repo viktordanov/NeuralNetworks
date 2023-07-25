@@ -1,0 +1,7 @@
+# ninja log v5
+0	13	1690115205533371495	CMakeFiles/cpp_neural_networks.dir/Util.cpp.o	8c53a73da8bcd8f7
+0	237	1690115205756700936	CMakeFiles/cpp_neural_networks.dir/NeuralNetwork.cpp.o	9b8f92ac0a5c24c6
+0	301	1690115205820033166	CMakeFiles/cpp_neural_networks.dir/main.cpp.o	88afd14a7850652c
+0	360	1690115205880032120	CMakeFiles/cpp_neural_networks.dir/Matrix.cpp.o	e889b124fc7f392a
+0	217	1690115363817539087	CMakeFiles/cpp_neural_networks.dir/main.cpp.o	88afd14a7850652c
+217	264	1690115363864205086	cpp_neural_networks	34583553685e1c53
